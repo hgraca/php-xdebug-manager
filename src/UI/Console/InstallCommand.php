@@ -18,10 +18,9 @@ final class InstallCommand extends CommandAbstract
         $this
             ->setName('xdebug:install')
             ->setDescription('Install XDebug.')
-            ->addArgument('hostIp', InputArgument::REQUIRED, 'The host IP')
+            ->addArgument('projectName', InputArgument::OPTIONAL, 'The project name, used by the IDE', 'project')
             ->addArgument('xdebugOutputDir', InputArgument::OPTIONAL, 'Xdebug output dir for the profiler', '/tmp')
-            ->addArgument('xdebugIdeKey', InputArgument::OPTIONAL, 'IDE key so the IDE picks it up', 'PHPSTORM')
-            ->addArgument('hostname', InputArgument::OPTIONAL, 'The server hostname, used when debugging CLI', '');
+            ->addArgument('xdebugIdeKey', InputArgument::OPTIONAL, 'IDE key so the IDE picks it up', 'PHPSTORM');
     }
 
     /**
@@ -45,8 +44,7 @@ final class InstallCommand extends CommandAbstract
             $configurationService->resetConfig(
                 $input->getArgument('hostIp'),
                 $input->getArgument('xdebugOutputDir'),
-                $input->getArgument('xdebugIdeKey'),
-                $input->getArgument('hostname')
+                $input->getArgument('xdebugIdeKey')
             );
         } catch (XdebugEnabledException $e) {
             $output->writeln('Xdebug is already enabled. Nothing to do!');

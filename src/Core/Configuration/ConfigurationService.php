@@ -5,7 +5,9 @@ namespace Hgraca\XdebugManager\Core\Configuration;
 use Hgraca\Helper\StringHelper;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugDisabledException;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugEnabledException;
+use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugBashrcManager;
 use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugConfigManagerInterface;
+use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugIniManager;
 use Hgraca\XdebugManager\Core\Context;
 
 final class ConfigurationService
@@ -14,20 +16,27 @@ final class ConfigurationService
     private const CMD_PHP_VERSION_XDEBUG_ENABLED_MATCH = 'with Xdebug';
 
     /**
-     * @var XdebugConfigManagerInterface[]
-     */
-    private $xdebugConfigManagerList;
-
-    /**
      * @var Context
      */
     private $context;
 
+    /**
+     * @var XdebugIniManager
+     */
+    private $xdebugIniManager;
+
+    /**
+     * @var XdebugBashrcManager
+     */
+    private $xdebugBashrcManager;
+
     public function __construct(
-        XdebugConfigManagerInterface ... $xdebugConfigManagerList
+        XdebugIniManager $xdebugIniManager,
+        XdebugBashrcManager $xdebugBashrcManager
     ) {
-        $this->xdebugConfigManagerList = $xdebugConfigManagerList;
         $this->context = new Context();
+        $this->xdebugIniManager = $xdebugIniManager;
+        $this->xdebugBashrcManager = $xdebugBashrcManager;
     }
 
     /**
@@ -51,12 +60,10 @@ final class ConfigurationService
         $this->disableXdebugModule();
     }
 
-    public function resetConfig(string $hostIp, string $xdebugOutputDir, string $xdebugIdeKey, string $hostname): void
+    public function resetConfig(string $hostIp, string $xdebugOutputDir, string $xdebugIdeKey): void
     {
-        foreach ($this->xdebugConfigManagerList as $xdebugConfigManager) {
-            $xdebugConfigManager->remove();
-            $xdebugConfigManager->create($hostIp, $xdebugOutputDir, $xdebugIdeKey, $hostname);
-        }
+        $this->xdebugIniManager->remove();
+        $this->xdebugIniManager->create($hostIp, $xdebugOutputDir, $xdebugIdeKey);
     }
 
     public function isEnabled(): bool
@@ -66,9 +73,12 @@ final class ConfigurationService
 
     public function setDirective(string $key, string $value): void
     {
-        foreach ($this->xdebugConfigManagerList as $xdebugConfigManager) {
-            $xdebugConfigManager->set($key, $value);
-        }
+        $this->xdebugIniManager->set($key, $value);
+    }
+
+    public function setProjectName(string $projectName): void
+    {
+        $this->xdebugBashrcManager->setProjectName($projectName);
     }
 
     private function enableXdebugModule(): void
