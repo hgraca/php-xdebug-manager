@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  php_pecl:
+    container_name: php_pecl
+    build:
+      context: ./tests/storage/pecl
+    restart: on-failure
+    volumes:
+      - .:/opt/xdebug-manager

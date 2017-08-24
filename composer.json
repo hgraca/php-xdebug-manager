@@ -1,0 +1,52 @@
+{
+    "name": "hgraca/xdebug-manager",
+    "license": "MIT",
+    "type": "CLI tool",
+    "description": "A small utility to install/uninstall/enable/disable xdebug.",
+    "authors": [
+        {
+            "name": "Herberto Graça",
+            "email": "herberto.graca@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hgraca\\XdebugManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hgraca\\XdebugManager\\Test\\": "tests/"
+        }
+    },
+    "require": {
+        "Cilex/Cilex": "^2.0",
+        "hgraca/helper": "^1.4.0",
+        "php": ">=7.1",
+        "roave/security-advisories": "dev-master"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "mockery/mockery": "v1.0.0-alpha1",
+        "phpunit/dbunit": "^3.0",
+        "phpunit/php-code-coverage": "^5",
+        "phpunit/php-invoker": "^1.1",
+        "phpunit/phpunit": "^6.0"
+    },
+    "suggest": {
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "bin-dir": "vendor/bin",
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "post-install-cmd": [],
+        "post-update-cmd": [],
+        "post-create-project-cmd": []
+    }
+}
