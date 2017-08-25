@@ -27,11 +27,9 @@ final class OnCommand extends CommandAbstract
             $output->writeln('Enabling ...');
             $configurationService = $this->getConfigurationService();
             $configurationService->enable();
+            $output->writeln('Done!');
         } catch (XdebugEnabledException $e) {
             $output->writeln('Xdebug is already enabled. Nothing to do!');
-            exit;
         }
-
-        $output->writeln('Done!');
     }
 }
