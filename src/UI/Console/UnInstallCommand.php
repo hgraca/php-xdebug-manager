@@ -27,6 +27,7 @@ final class UnInstallCommand extends CommandAbstract
             $installationService = $this->getInstallationService();
             $output->writeln('Uninstalling ...');
             $installationService->uninstall();
+            $output->writeln('Done!');
         } catch (XdebugNotInstalledException $e) {
             $output->writeln('Xdebug is not installed. Nothing to do!');
         }

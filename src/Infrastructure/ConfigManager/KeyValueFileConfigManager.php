@@ -47,11 +47,7 @@ final class KeyValueFileConfigManager implements ConfigManagerInterface
     private function readConfig(string $filePath): array
     {
         $config = [];
-        $configLineList = file($filePath);
-
-        if ($configLineList === false) {
-            return $config;
-        }
+        $configLineList = file_exists($filePath) ? file($filePath) : [];
 
         foreach ($configLineList as $configLine) {
             [$key, $value] = explode($this->assignmentOperator, $configLine);

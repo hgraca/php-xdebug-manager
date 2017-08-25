@@ -20,6 +20,7 @@ final class Pecl implements PackageManagerInterface
     public function uninstall(): void
     {
         exec(self::CMD_UNINSTALL);
+        exec('rm /usr/local/etc/php/conf.d/xdebug.ini');
     }
 
     public function isInstalled(): bool
