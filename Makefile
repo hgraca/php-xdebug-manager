@@ -55,6 +55,9 @@ down:
 install:
 	docker exec -it php_pecl bin/console xdebug:install
 
+off:
+	docker exec -it php_pecl bin/console xdebug:off
+
 php-v:
 	docker exec -it php_pecl bash -ic 'php -v'
 
