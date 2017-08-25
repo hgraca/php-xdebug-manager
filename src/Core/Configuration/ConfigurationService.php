@@ -3,10 +3,10 @@
 namespace Hgraca\XdebugManager\Core\Configuration;
 
 use Hgraca\Helper\StringHelper;
+use Hgraca\XdebugManager\Core\Configuration\ConfigManager\EnvironmentManager;
+use Hgraca\XdebugManager\Core\Configuration\ConfigManager\IniManager;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugDisabledException;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugEnabledException;
-use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugBashrcManager;
-use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugIniManager;
 use Hgraca\XdebugManager\Core\Context;
 use Hgraca\XdebugManager\Infrastructure\Php\LinuxPhpManager;
 use Hgraca\XdebugManager\Infrastructure\Php\PhpManagerInterface;
@@ -21,12 +21,12 @@ final class ConfigurationService
     private $context;
 
     /**
-     * @var XdebugIniManager
+     * @var IniManager
      */
     private $xdebugIniManager;
 
     /**
-     * @var XdebugBashrcManager
+     * @var EnvironmentManager
      */
     private $xdebugBashrcManager;
 
@@ -36,8 +36,8 @@ final class ConfigurationService
     private $phpManager;
 
     public function __construct(
-        XdebugIniManager $xdebugIniManager,
-        XdebugBashrcManager $xdebugBashrcManager,
+        IniManager $xdebugIniManager,
+        EnvironmentManager $xdebugBashrcManager,
         PhpManagerInterface $phpManager = null
     ) {
         $this->context = new Context();

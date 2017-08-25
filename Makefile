@@ -56,4 +56,7 @@ install:
 	docker exec -it php_pecl bin/console xdebug:install
 
 php-v:
-	docker exec -it php_pecl php -v
+	docker exec -it php_pecl bash -ic 'php -v'
+
+php-info:
+	docker exec -it php_pecl bash -ic "php -r 'phpinfo();'"

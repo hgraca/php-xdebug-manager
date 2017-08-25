@@ -1,12 +1,12 @@
 <?php
 
-namespace Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager;
+namespace Hgraca\XdebugManager\Core\Configuration\ConfigManager;
 
 use Hgraca\XdebugManager\Core\Context;
 use Hgraca\XdebugManager\Infrastructure\ConfigManager\ConfigManagerInterface;
 use Hgraca\XdebugManager\Infrastructure\ConfigManager\KeyValueFileConfigManager;
 
-final class XdebugIniManager
+final class IniManager
 {
     private const QUOTED_DIRECTIVE_LIST = [
         'xdebug.profiler_output_dir',
