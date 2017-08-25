@@ -67,6 +67,9 @@ rename:
 ide-config:
 	docker exec -it php_pecl bash -ic 'echo $$PHP_IDE_CONFIG'
 
+xdebug-config:
+	docker exec -it php_pecl bash -ic 'cat /usr/local/etc/php/conf.d/xdebug.ini'
+
 php-v:
 	docker exec -it php_pecl bash -ic 'php -v'
 
