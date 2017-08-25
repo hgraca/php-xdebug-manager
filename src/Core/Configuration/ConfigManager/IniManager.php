@@ -69,6 +69,14 @@ final class IniManager
         );
     }
 
+    public function unSet(string $key): void
+    {
+        $this->configManager->unSet(
+            $this->getContext()->getXdebugIniPath(),
+            $key
+        );
+    }
+
     private function getContext(): Context
     {
         return $this->context;

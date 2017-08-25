@@ -15,4 +15,9 @@ final class BashEnvFileConfigManager extends TextFileConfigManager
     {
         parent::set($filePath, self::KEY_PREFIX . $key, "'$value'");
     }
+
+    public function unSet(string $filePath, string $key): void
+    {
+        parent::unSet($filePath, self::KEY_PREFIX . $key);
+    }
 }

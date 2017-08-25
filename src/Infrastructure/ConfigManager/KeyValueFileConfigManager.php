@@ -23,6 +23,15 @@ final class KeyValueFileConfigManager implements ConfigManagerInterface
         $this->writeConfig($filePath, $config);
     }
 
+    public function unSet(string $filePath, string $key): void
+    {
+        $config = $this->readConfig($filePath);
+
+        unset($config[$key]);
+
+        $this->writeConfig($filePath, $config);
+    }
+
     /**
      * @param array $iniConfig in the format ['directive' => $value]
      */
@@ -44,8 +53,9 @@ final class KeyValueFileConfigManager implements ConfigManagerInterface
             return $config;
         }
 
-        foreach ($configLineList as [$key, $value]) {
-            $config[$key] = $value;
+        foreach ($configLineList as $configLine) {
+            [$key, $value] = explode($this->assignmentOperator, $configLine);
+            $config[$key] = trim($value);
         }
 
         return $config;

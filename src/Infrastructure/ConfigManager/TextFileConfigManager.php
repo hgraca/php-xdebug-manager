@@ -36,6 +36,20 @@ class TextFileConfigManager implements ConfigManagerInterface
         $this->writeConfig($filePath, $iniConfigLines);
     }
 
+    public function unSet(string $filePath, string $keyToUnSet): void
+    {
+        $iniConfigLines = $this->readConfig($filePath);
+
+        foreach ($iniConfigLines as $key => $line) {
+            // we go through all lines so that if the same directive is present several times, they are all updated
+            if (StringHelper::hasBeginning($keyToUnSet, $line)) {
+                unset($iniConfigLines[$key]);
+            }
+        }
+
+        $this->writeConfig($filePath, $iniConfigLines);
+    }
+
     /**
      * @param array $iniConfig
      */

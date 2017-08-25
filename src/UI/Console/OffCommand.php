@@ -24,14 +24,12 @@ final class OffCommand extends CommandAbstract
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $output->writeln('Enabling ...');
+            $output->writeln('Disabling ...');
             $configurationService = $this->getConfigurationService();
-            $configurationService->enable();
+            $configurationService->disable();
+            $output->writeln('Done!');
         } catch (XdebugDisabledException $e) {
             $output->writeln('Xdebug is already disabled. Nothing to do!');
-            exit;
         }
-
-        $output->writeln('Done!');
     }
 }

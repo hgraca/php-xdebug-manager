@@ -60,7 +60,7 @@ final class ConfigurationService
 
     public function disable(): void
     {
-        if ($this->isEnabled()) {
+        if (!$this->isEnabled()) {
             throw new XdebugDisabledException();
         }
 
@@ -90,19 +90,12 @@ final class ConfigurationService
 
     private function enableXdebugModule(): void
     {
-        $xdebugIniPath = $this->context->getXdebugIniPath();
-        foreach ($this->context->getXdebugIniLinkingPathList() as $linkingPath) {
-            link($xdebugIniPath, $linkingPath);
-        }
+        $this->xdebugIniManager->set('zend_extension', 'xdebug.so');
     }
 
     private function disableXdebugModule(): void
     {
-        foreach ($this->context->getXdebugIniLinkingPathList() as $linkingPath) {
-            if (file_exists($linkingPath)) {
-                unlink($linkingPath);
-            }
-        }
+        $this->xdebugIniManager->unSet('zend_extension');
     }
 
     private function guessHost()
