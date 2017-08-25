@@ -61,6 +61,12 @@ off:
 on:
 	docker exec -it php_pecl bash -ic "bin/console xdebug:on && php -v"
 
+rename:
+	docker exec -it php_pecl bash -ic 'bin/console xdebug:rename-project bladibla'
+
+ide-config:
+	docker exec -it php_pecl bash -ic 'echo $$PHP_IDE_CONFIG'
+
 php-v:
 	docker exec -it php_pecl bash -ic 'php -v'
 

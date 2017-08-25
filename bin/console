@@ -4,6 +4,7 @@
 use Hgraca\XdebugManager\UI\Console\InstallCommand;
 use Hgraca\XdebugManager\UI\Console\OffCommand;
 use Hgraca\XdebugManager\UI\Console\OnCommand;
+use Hgraca\XdebugManager\UI\Console\RenameProjectCommand;
 use Hgraca\XdebugManager\UI\Console\SetCommand;
 use Hgraca\XdebugManager\UI\Console\UnInstallCommand;
 
@@ -20,5 +21,6 @@ $app->command(new UnInstallCommand());
 $app->command(new OnCommand());
 $app->command(new OffCommand());
 $app->command(new SetCommand());
+$app->command(new RenameProjectCommand());
 
 $app->run();
