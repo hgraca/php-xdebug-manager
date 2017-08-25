@@ -13,7 +13,8 @@ final class IniManager
         'xdebug.profiler_output_name',
         'xdebug.trace_output_dir',
         'xdebug.trace_output_name',
-        'xdebug.idekey'
+        'xdebug.idekey',
+        'xdebug.remote_host'
     ];
 
     /**
@@ -110,7 +111,7 @@ final class IniManager
 
             'xdebug.remote_autostart' => 1,           // If 0, CLI debug will not work. If 1, always try to start a remote debugging session and connect to a client, regardless of the GET/POST/COOKIE variable being present.
             'xdebug.remote_enable' => 1,              // trigger: cookie:XDEBUG_SESSION_START=${xdebugIdeKey}
-            'xdebug.remote_host'=> $host,             // Host where the debug client is running, you can either use a host name, IP address, or 'unix:///path/to/sock' for a Unix domain socket. This setting is ignored if xdebug.remote_connect_back is enabled.
+            'xdebug.remote_host'=> "\"${host}\"",     // Host where the debug client is running, you can either use a host name, IP address, or 'unix:///path/to/sock' for a Unix domain socket. This setting is ignored if xdebug.remote_connect_back is enabled.
             'xdebug.remote_connect_back' => 0,        // If enabled, the xdebug.remote_host setting is ignored and Xdebug will try to connect to the client that made the HTTP request. This setting does not apply for debugging through the CLI
             'xdebug.remote_port' => 9000,
             'xdebug.remote_handler' => 'dbgp',
