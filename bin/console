@@ -1,26 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-use Hgraca\XdebugManager\UI\Console\InstallCommand;
-use Hgraca\XdebugManager\UI\Console\OffCommand;
-use Hgraca\XdebugManager\UI\Console\OnCommand;
-use Hgraca\XdebugManager\UI\Console\RenameProjectCommand;
-use Hgraca\XdebugManager\UI\Console\SetCommand;
-use Hgraca\XdebugManager\UI\Console\UnInstallCommand;
+use Cilex\Application;
 
-define('ROOT_DIR', __DIR__ . '/..');
+set_time_limit(0);
 
-if (!$loader = include __DIR__ . '/../vendor/autoload.php') {
-    die('You must set up the project dependencies.');
-}
+/** @var Application $console */
+$console = require __DIR__ . '/../src/console.php';
 
-$app = new \Cilex\Application('XdebugManager');
-
-$app->command(new InstallCommand());
-$app->command(new UnInstallCommand());
-$app->command(new OnCommand());
-$app->command(new OffCommand());
-$app->command(new SetCommand());
-$app->command(new RenameProjectCommand());
-
-$app->run();
+$console->run();
