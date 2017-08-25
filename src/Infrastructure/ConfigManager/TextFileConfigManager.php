@@ -4,12 +4,12 @@ namespace Hgraca\XdebugManager\Infrastructure\ConfigManager;
 
 use Hgraca\Helper\StringHelper;
 
-final class TextFileConfigManager implements ConfigManagerInterface
+class TextFileConfigManager implements ConfigManagerInterface
 {
     /**
      * @var string
      */
-    private $assignmentOperator;
+    protected $assignmentOperator;
 
     public function __construct(string $assignmentOperator = '=')
     {
