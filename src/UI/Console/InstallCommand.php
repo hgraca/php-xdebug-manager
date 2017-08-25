@@ -20,7 +20,14 @@ final class InstallCommand extends CommandAbstract
             ->setDescription('Install XDebug.')
             ->addArgument('projectName', InputArgument::OPTIONAL, 'The project name, used by the IDE', 'project')
             ->addArgument('xdebugOutputDir', InputArgument::OPTIONAL, 'Xdebug output dir for the profiler', '/tmp')
-            ->addArgument('xdebugIdeKey', InputArgument::OPTIONAL, 'IDE key so the IDE picks it up', 'PHPSTORM');
+            ->addArgument('xdebugIdeKey', InputArgument::OPTIONAL, 'IDE key so the IDE picks it up', 'PHPSTORM')
+            ->addArgument(
+                'host',
+                InputArgument::OPTIONAL,
+                'Host where the debug client is running, you can either use a host name, IP address,'
+                . ' or \'unix:///path/to/sock\' for a Unix domain socket.'
+                . 'We only need to use this if the educated guess is failing.'
+            );
     }
 
     /**
@@ -33,8 +40,7 @@ final class InstallCommand extends CommandAbstract
             $output->writeln('Installing ...');
             $installationService->install();
         } catch (XdebugInstalledException $e) {
-            $output->writeln('Xdebug is already installed. Nothing to do!');
-            exit;
+            $output->writeln('Xdebug is already installed. Moving on...');
         }
 
         try {
@@ -42,13 +48,14 @@ final class InstallCommand extends CommandAbstract
             $configurationService = $this->getConfigurationService();
             $configurationService->enable();
             $configurationService->resetConfig(
-                $input->getArgument('hostIp'),
                 $input->getArgument('xdebugOutputDir'),
-                $input->getArgument('xdebugIdeKey')
+                $input->getArgument('xdebugIdeKey'),
+                $input->getArgument('host')
             );
+            $configurationService->setProjectName($input->getArgument('projectName'));
+            $this->getPhpManager()->restartPhpFpm();
         } catch (XdebugEnabledException $e) {
             $output->writeln('Xdebug is already enabled. Nothing to do!');
-            exit;
         }
 
         $output->writeln('Done!');

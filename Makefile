@@ -14,30 +14,46 @@ composer-install:
 composer-update:
 	composer update
 
-coverage:
-	php -dzend_extension=xdebug.so bin/phpunit --coverage-text --coverage-clover=coverage.clover.xml
-
-cs-fix:
-	bin/php-cs-fixer fix --verbose
-
-test:
-	bin/phpunit
+#coverage:
+#	php -dzend_extension=xdebug.so bin/phpunit --coverage-text --coverage-clover=coverage.clover.xml
+#
+#cs-fix:
+#	bin/php-cs-fixer fix --verbose
+#
+#test:
+#	bin/phpunit
+##	bin/humbug
+#
+#test-debug:
+#	php -dzend_extension=xdebug.so bin/phpunit
+#
+#test-acceptance:
+#	bin/phpunit --testsuite acceptance
+#
+#test-functional:
+#	bin/phpunit --testsuite functional
+#
+#test-humbug:
 #	bin/humbug
+#
+#test-integration:
+#	bin/phpunit --testsuite integration
+#
+#test-unit:
+#	bin/phpunit --testsuite unit
 
-test-debug:
-	php -dzend_extension=xdebug.so bin/phpunit
+### DOCKER
+up:
+	docker-compose up -d
 
-test-acceptance:
-	bin/phpunit --testsuite acceptance
+stop:
+	docker-compose stop
 
-test-functional:
-	bin/phpunit --testsuite functional
+down:
+	docker-compose down
 
-test-humbug:
-	bin/humbug
+install:
+	docker exec -it php_pecl bin/console xdebug:install
 
-test-integration:
-	bin/phpunit --testsuite integration
-
-test-unit:
-	bin/phpunit --testsuite unit
+php-v:
+	docker exec -it php_pecl php -v

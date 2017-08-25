@@ -30,7 +30,7 @@ final class KeyValueFileConfigManager implements ConfigManagerInterface
     {
         $configLineList = [];
         foreach ($config as $key => $value) {
-            $configLineList[] = $key . $this->assignmentOperator . $value;
+            $configLineList[] = $key . $this->assignmentOperator . $value . "\n";
         }
         file_put_contents($filePath, $configLineList);
     }
@@ -39,6 +39,11 @@ final class KeyValueFileConfigManager implements ConfigManagerInterface
     {
         $config = [];
         $configLineList = file($filePath);
+
+        if ($configLineList === false) {
+            return $config;
+        }
+
         foreach ($configLineList as [$key, $value]) {
             $config[$key] = $value;
         }

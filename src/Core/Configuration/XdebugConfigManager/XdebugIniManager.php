@@ -38,9 +38,9 @@ final class XdebugIniManager
     }
 
     public function create(
-        string $host,
         string $xdebugOutputDir,
-        string $xdebugIdeKey
+        string $xdebugIdeKey,
+        string $host
     ): void {
         $this->configManager->writeConfig(
             $this->getContext()->getXdebugIniPath(),
@@ -51,9 +51,13 @@ final class XdebugIniManager
     public function remove(): void
     {
         foreach ($this->context->getXdebugIniLinkingPathList() as $linkingPath) {
-            unlink($linkingPath);
+            if (file_exists($linkingPath)) {
+                unlink($linkingPath);
+            }
         }
-        unlink($this->context->getXdebugIniPath());
+        if (file_exists($this->context->getXdebugIniPath())) {
+            unlink($this->context->getXdebugIniPath());
+        }
     }
 
     public function set(string $key, string $value): void

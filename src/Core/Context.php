@@ -36,7 +36,7 @@ final class Context
             'BASHRC' => '/etc/bash.bashrc',
         ],
         [
-            'assert' => '/usr/local/etc/php/php.ini',
+            'assert' => '/usr/local/etc/php',
             'xdebug.ini' => "/usr/local/etc/php/conf.d/xdebug.ini",
             'link_to' => [],
             'package_manager' => Pecl::class,

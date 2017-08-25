@@ -6,13 +6,13 @@ use Hgraca\Helper\StringHelper;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugDisabledException;
 use Hgraca\XdebugManager\Core\Configuration\Exception\XdebugEnabledException;
 use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugBashrcManager;
-use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugConfigManagerInterface;
 use Hgraca\XdebugManager\Core\Configuration\XdebugConfigManager\XdebugIniManager;
 use Hgraca\XdebugManager\Core\Context;
+use Hgraca\XdebugManager\Infrastructure\Php\LinuxPhpManager;
+use Hgraca\XdebugManager\Infrastructure\Php\PhpManagerInterface;
 
 final class ConfigurationService
 {
-    private const CMD_PHP_VERSION = 'php -v';
     private const CMD_PHP_VERSION_XDEBUG_ENABLED_MATCH = 'with Xdebug';
 
     /**
@@ -30,13 +30,20 @@ final class ConfigurationService
      */
     private $xdebugBashrcManager;
 
+    /**
+     * @var PhpManagerInterface
+     */
+    private $phpManager;
+
     public function __construct(
         XdebugIniManager $xdebugIniManager,
-        XdebugBashrcManager $xdebugBashrcManager
+        XdebugBashrcManager $xdebugBashrcManager,
+        PhpManagerInterface $phpManager = null
     ) {
         $this->context = new Context();
         $this->xdebugIniManager = $xdebugIniManager;
         $this->xdebugBashrcManager = $xdebugBashrcManager;
+        $this->phpManager = $phpManager ?? new LinuxPhpManager();
     }
 
     /**
@@ -60,15 +67,15 @@ final class ConfigurationService
         $this->disableXdebugModule();
     }
 
-    public function resetConfig(string $hostIp, string $xdebugOutputDir, string $xdebugIdeKey): void
+    public function resetConfig(string $xdebugOutputDir, string $xdebugIdeKey, string $host = null): void
     {
         $this->xdebugIniManager->remove();
-        $this->xdebugIniManager->create($hostIp, $xdebugOutputDir, $xdebugIdeKey);
+        $this->xdebugIniManager->create($xdebugOutputDir, $xdebugIdeKey, $host ?? $this->guessHost());
     }
 
     public function isEnabled(): bool
     {
-        return StringHelper::has(self::CMD_PHP_VERSION_XDEBUG_ENABLED_MATCH, exec(self::CMD_PHP_VERSION));
+        return StringHelper::has(self::CMD_PHP_VERSION_XDEBUG_ENABLED_MATCH, $this->phpManager->getPhpStatus());
     }
 
     public function setDirective(string $key, string $value): void
@@ -92,7 +99,14 @@ final class ConfigurationService
     private function disableXdebugModule(): void
     {
         foreach ($this->context->getXdebugIniLinkingPathList() as $linkingPath) {
-            unlink($linkingPath);
+            if (file_exists($linkingPath)) {
+                unlink($linkingPath);
+            }
         }
+    }
+
+    private function guessHost()
+    {
+        return exec('/sbin/ip route|awk \'/default/ { print $3 }\'');
     }
 }
