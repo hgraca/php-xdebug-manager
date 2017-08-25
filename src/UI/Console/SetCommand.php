@@ -17,7 +17,9 @@ final class SetCommand extends CommandAbstract
             ->setName('xdebug:set')
             ->setDescription('Set an XDebug directive')
             ->addArgument('key', InputArgument::REQUIRED)
-            ->addArgument('val', InputArgument::REQUIRED);
+            ->addArgument('val', InputArgument::REQUIRED)
+            ->addUsage('bin/console xdebug:set xdebug.trace_output_dir /tmp')
+            ->addUsage('bin/console xdebug:set xdebug.auto_trace 1');
     }
 
     /**
@@ -25,7 +27,7 @@ final class SetCommand extends CommandAbstract
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Enabling ...');
+        $output->writeln('Setting ...');
 
         $configurationService = $this->getConfigurationService();
         $configurationService->setDirective(
