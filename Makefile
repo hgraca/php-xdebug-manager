@@ -53,10 +53,13 @@ down:
 	docker-compose down
 
 install:
-	docker exec -it php_pecl bin/console xdebug:install
+	docker exec -it php_pecl bash -ic "bin/console xdebug:install && php -v"
 
 off:
-	docker exec -it php_pecl bin/console xdebug:off
+	docker exec -it php_pecl bash -ic "bin/console xdebug:off && php -v"
+
+on:
+	docker exec -it php_pecl bash -ic "bin/console xdebug:on && php -v"
 
 php-v:
 	docker exec -it php_pecl bash -ic 'php -v'
