@@ -13,6 +13,13 @@ abstract class AbstractConsoleTest extends TestCase
         self::CONTAINER_PHP_PECL => '/usr/local/etc/php/conf.d/xdebug.ini',
     ];
 
+    public static function containersProvider(): array
+    {
+        return [
+            [self::CONTAINER_PHP_PECL],
+        ];
+    }
+
     protected function createConsole(): Application
     {
         require_once __DIR__ . '/../vendor/autoload.php';
@@ -47,10 +54,24 @@ abstract class AbstractConsoleTest extends TestCase
         return exec("docker exec -it $container bash -ic 'echo \$PHP_IDE_CONFIG'");
     }
 
-    public function containersProvider(): array
+    protected static function startContainer(string $container): void
     {
-        return [
-            [self::CONTAINER_PHP_PECL],
-        ];
+        $dir = __DIR__;
+
+        shell_exec("docker-compose -f $dir/storage/$container/docker-compose.yml up -d 2> /dev/null");
+    }
+
+    protected static function stopContainer(string $container): void
+    {
+        $dir = __DIR__;
+
+        shell_exec("docker-compose -f $dir/storage/$container/docker-compose.yml stop 2> /dev/null");
+    }
+
+    protected static function destroyContainer(string $container): void
+    {
+        $dir = __DIR__;
+
+        shell_exec("docker-compose -f $dir/storage/$container/docker-compose.yml down 2> /dev/null");
     }
 }

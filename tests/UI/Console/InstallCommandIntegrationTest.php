@@ -7,6 +7,27 @@ use Hgraca\XdebugManager\Test\AbstractConsoleTest;
 final class InstallCommandIntegrationTest extends AbstractConsoleTest
 {
     /**
+     * @beforeClass
+     */
+    public static function beforeClass(): void
+    {
+        foreach (self::containersProvider() as [$container]) {
+            self::destroyContainer($container);
+            self::startContainer($container);
+        }
+    }
+
+    /**
+     * @afterClass
+     */
+    public static function afterClass(): void
+    {
+        foreach (self::containersProvider() as [$container]) {
+            self::destroyContainer($container);
+        }
+    }
+
+    /**
      * @test
      * @dataProvider containersProvider
      */
