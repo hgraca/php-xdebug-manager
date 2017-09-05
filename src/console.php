@@ -18,3 +18,5 @@ $console->command(new OnCommand());
 $console->command(new OffCommand());
 $console->command(new SetCommand());
 $console->command(new RenameProjectCommand());
+
+return $console;
