@@ -44,13 +44,16 @@ composer-update:
 
 ### DOCKER
 up:
-	docker-compose up -d
+	docker-compose -f /home/herberto/Development/workspace/00-hgraca/php/php-xdebug-manager/tests/storage/php_pecl/docker-compose.yml up -d
 
 stop:
-	docker-compose stop
+	docker-compose -f /home/herberto/Development/workspace/00-hgraca/php/php-xdebug-manager/tests/storage/php_pecl/docker-compose.yml stop
 
 down:
-	docker-compose down
+	docker-compose -f /home/herberto/Development/workspace/00-hgraca/php/php-xdebug-manager/tests/storage/php_pecl/docker-compose.yml down
+
+ll:
+	docker exec -it php_pecl bash -ic "ls -la"
 
 install:
 	docker exec -it php_pecl bash -ic "bin/console xdebug:install && php -v"
@@ -75,3 +78,7 @@ php-v:
 
 php-info:
 	docker exec -it php_pecl bash -ic "php -r 'phpinfo();'"
+
+test:
+	vendor/bin/phpunit
+
