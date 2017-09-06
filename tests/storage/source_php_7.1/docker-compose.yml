@@ -1,0 +1,9 @@
+version: '3.2'
+
+services:
+  source_php_7.1:
+    container_name: source_php_7.1
+    image: "php:7.1.7-fpm"
+    working_dir: /opt/xdebug-manager
+    volumes:
+      - ../../../:/opt/xdebug-manager

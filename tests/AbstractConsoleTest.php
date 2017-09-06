@@ -7,16 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractConsoleTest extends TestCase
 {
-    const CONTAINER_PHP_PECL = 'php_pecl';
+    const CONTAINER_PHP_SOURCE_PHP_71 = 'source_php_7.1';
+    const CONTAINER_PHP_APTGET_PHP_71 = 'aptget_php_7.1';
 
     const XDEBUG_INI_PATH = [
-        self::CONTAINER_PHP_PECL => '/usr/local/etc/php/conf.d/xdebug.ini',
+        self::CONTAINER_PHP_SOURCE_PHP_71 => '/usr/local/etc/php/conf.d/xdebug.ini',
     ];
 
     public static function containersProvider(): array
     {
         return [
-            [self::CONTAINER_PHP_PECL],
+//            [self::CONTAINER_PHP_SOURCE_PHP_71],
+            [self::CONTAINER_PHP_APTGET_PHP_71],
         ];
     }
 

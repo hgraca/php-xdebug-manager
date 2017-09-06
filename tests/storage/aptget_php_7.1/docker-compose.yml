@@ -1,0 +1,8 @@
+version: '3.2'
+
+services:
+  aptget_php_7.1:
+    container_name: aptget_php_7.1
+    image: "hgraca/php-xdebug-manager:aptget_php_7.1"
+    volumes:
+      - ../../../:/opt/xdebug-manager
