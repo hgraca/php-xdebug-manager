@@ -10,7 +10,13 @@ RUN apt-get update && \
         php7.1-fpm \
         --no-install-recommends && \
     rm -r /var/lib/apt/lists/* && \
-    sed -i "s/listen = .*/listen = 9000/" /etc/php/7.1/fpm/pool.d/www.conf
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    sed -i -e "s/pid =.*/pid = \/var\/run\/php7.1-fpm.pid/" /etc/php/7.1/fpm/php-fpm.conf && \
+    sed -i -e "s/error_log =.*/error_log = \/proc\/self\/fd\/2/" /etc/php/7.1/fpm/php-fpm.conf && \
+    sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.1/fpm/php-fpm.conf && \
+    sed -i "s/listen = .*/listen = 9000/" /etc/php/7.1/fpm/pool.d/www.conf && \
+    sed -i "s/;catch_workers_output = .*/catch_workers_output = yes/" /etc/php/7.1/fpm/pool.d/www.conf
 
 EXPOSE 9000
 CMD ["php-fpm7.1"]
