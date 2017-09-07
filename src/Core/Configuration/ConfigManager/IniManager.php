@@ -47,6 +47,13 @@ final class IniManager
             $this->getContext()->getXdebugIniPath(),
             $this->createIniConfig($host, $xdebugOutputDir, $xdebugIdeKey)
         );
+
+        foreach ($this->context->getXdebugIniLinkingPathList() as $linkingPath) {
+            if (file_exists($linkingPath)) {
+                unlink($linkingPath);
+            }
+            link($this->context->getXdebugIniPath(), $linkingPath);
+        }
     }
 
     public function remove(): void
