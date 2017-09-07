@@ -9,7 +9,8 @@ RUN apt-get update && \
         php7.1-cli \
         php7.1-fpm \
         --no-install-recommends && \
-    rm -r /var/lib/apt/lists/*
+    rm -r /var/lib/apt/lists/* && \
+    sed -i "s/listen = .*/listen = 9000/" /etc/php/7.1/fpm/pool.d/www.conf
 
 EXPOSE 9000
 CMD ["php-fpm7.1"]
