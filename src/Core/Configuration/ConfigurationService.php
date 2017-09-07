@@ -14,6 +14,7 @@ use Hgraca\XdebugManager\Infrastructure\Php\PhpManagerInterface;
 final class ConfigurationService
 {
     private const CMD_PHP_VERSION_XDEBUG_ENABLED_MATCH = 'with Xdebug';
+    const DEFAULT_HOST_IP = '172.25.0.1';
 
     /**
      * @var Context
@@ -100,6 +101,6 @@ final class ConfigurationService
 
     private function guessHost()
     {
-        return exec('/sbin/ip route|awk \'/default/ { print $3 }\'');
+        return exec('/sbin/ip route|awk \'/default/ { print $3 }\'') ?? self::DEFAULT_HOST_IP;
     }
 }
