@@ -31,29 +31,29 @@ abstract class AbstractConsoleTest extends TestCase
 
     protected function runCommand(string $container, string $command): string
     {
-        return exec("docker exec -it $container bash -ic 'bin/console $command'");
+        return shell_exec("docker exec -it $container bash -ic 'bin/console $command'");
     }
 
     protected function getPhpStatus(string $container): string
     {
-        return exec("docker exec -it $container bash -ic 'php -v'");
+        return shell_exec("docker exec -it $container bash -ic 'php -v'");
     }
 
     protected function getPhpConfig(string $container): string
     {
-        return exec("docker exec -it $container bash -ic \"php -r 'phpinfo();'\"");
+        return shell_exec("docker exec -it $container bash -ic \"php -r 'phpinfo();'\"");
     }
 
     protected function getXdebugConfig(string $container): string
     {
         $xdebugIniPath = self::XDEBUG_INI_PATH[$container];
 
-        return exec("docker exec -it $container bash -ic 'cat $xdebugIniPath'");
+        return shell_exec("docker exec -it $container bash -ic 'cat $xdebugIniPath'");
     }
 
     protected function getIdeConfig(string $container): string
     {
-        return exec("docker exec -it $container bash -ic 'echo \$PHP_IDE_CONFIG'");
+        return shell_exec("docker exec -it $container bash -ic 'echo \$PHP_IDE_CONFIG'");
     }
 
     protected static function startContainer(string $container): void

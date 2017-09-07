@@ -11,6 +11,6 @@ final class LinuxPhpManager implements PhpManagerInterface
 
     public function getPhpStatus(): string
     {
-        return exec('php -v');
+        return shell_exec('php -v');
     }
 }
