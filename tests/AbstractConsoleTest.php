@@ -17,7 +17,7 @@ abstract class AbstractConsoleTest extends TestCase
     public static function containersProvider(): array
     {
         return [
-//            [self::CONTAINER_PHP_SOURCE_PHP_71],
+            [self::CONTAINER_PHP_SOURCE_PHP_71],
             [self::CONTAINER_PHP_APTGET_PHP_71],
         ];
     }
