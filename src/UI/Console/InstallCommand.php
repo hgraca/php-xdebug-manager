@@ -49,16 +49,17 @@ final class InstallCommand extends CommandAbstract
         try {
             $output->writeln('Configuring ...');
             $configurationService = $this->getConfigurationService();
-            $configurationService->enable();
             $configurationService->resetConfig(
                 $input->getOption('xdebugOutputDir'),
                 $input->getOption('xdebugIdeKey'),
                 $input->getOption('host')
             );
             $configurationService->setProjectName($input->getOption('projectName'));
-            $this->getPhpManager()->restartPhpFpm();
+            $configurationService->enable();
         } catch (XdebugEnabledException $e) {
-            $output->writeln('Xdebug is already enabled. Nothing to do!');
+            $output->writeln('Xdebug was already enabled, so we\'ve reset the config and will restart FPM.');
+        } finally {
+            $this->getPhpManager()->restartPhpFpm();
         }
 
         $output->writeln('Done!');
