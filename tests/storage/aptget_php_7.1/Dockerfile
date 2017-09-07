@@ -12,4 +12,4 @@ RUN apt-get update && \
     rm -r /var/lib/apt/lists/*
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php-fpm7.1"]
